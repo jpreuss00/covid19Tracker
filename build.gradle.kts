@@ -30,5 +30,5 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClassName = "covid19Tracker.App"
+    mainClassName = "main.java.covid19Tracker.Main"
 }
