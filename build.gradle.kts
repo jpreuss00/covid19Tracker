@@ -26,9 +26,27 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
+
+    implementation("org.postgresql:postgresql:42.2.10")
+    implementation("org.json:json:20190722")
+    implementation("org.eclipse.jetty:jetty-util-ajax:9.4.27.v20200227")
+    implementation("org.eclipse.jetty:jetty-server:9.4.27.v20200227")
 }
 
 application {
     // Define the main class for the application.
     mainClassName = "main.java.covid19Tracker.Main"
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "covid19Tracker.Main"
+    }
+
+    from(sourceSets.main.get().output)
+    dependsOn(configurations.runtimeClasspath)
+    from({
+        configurations.runtimeClasspath.get().filter {
+            it.name.endsWith("jar") }.map { zipTree(it) }
+    })
 }
