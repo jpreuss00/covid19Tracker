@@ -95,7 +95,7 @@
 
 # Lese das 4te Kapitel von Implementation Patterns "Motivation" und erkläre die Kosten eines Software-Projekts. Sind alle Projekte gleich?
 - die Gesamtkosten bestehen zum einen aus den kosten, die bei der Entwicklung entstehen und zum anderen aus den Kosten, die bei der Wartung entstehen
-- die Wartungskosten setzen sich aus den folgenden vier Aspekten zusammen: die aufgewendete Zeit um die App zu verstehen, die Zeit um die App zu ändern, die Zeit die zum Testen benötigt wird und die Zeit um die App Einsatzbereit zu machen
+- die Wartungskosten setzen sich aus den folgenden vier Aspekten zusammen: die aufgewendete Zeit um die App zu verstehen, die Zeit um die App zu verändern, die Zeit die zum Testen benötigt wird und die Zeit um die App Einsatzbereit zu machen
 
 # Wann gelten die Aussagen von Kent Beck nicht? 
 - Wenn keine Kommunikation zwischen den Programmierern besteht.
