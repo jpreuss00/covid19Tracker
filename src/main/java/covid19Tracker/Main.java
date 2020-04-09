@@ -16,10 +16,10 @@ public class Main {
         String database = "";
 
         if(database_url != null && !database_url.isEmpty()){
-            host = database_url.substring(91, 131);
+            host = database_url.substring(91, 132);
             user = database_url.substring(11, 25);
             password = database_url.substring(26, 90);
-            database = database_url.substring(137, 151);
+            database = database_url.substring(138, 152);
         } else {
             host = System.getenv("DBHOST");
             user = System.getenv("DBUSER");
@@ -31,8 +31,9 @@ public class Main {
             System.err.println("Missing environment variables");
             System.exit(1);
         }
-        System.out.printf("Starting app with host: %s, user: %s, database: %s \n",host,user,database);
+        System.out.printf("Starting app with host: %s, user: %s, database: %s , password %s\n",host,user,database,password);
+        InitDatabase initDatabase = new InitDatabase(host, user, password, database);
+        initDatabase.initiateDatabase();
         new Webserver().startJetty();
-        new InitDatabase(host, user, password, database).initiateDatabase();
     }
 }

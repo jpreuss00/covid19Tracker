@@ -33,18 +33,33 @@ public class InitDatabase {
                 }
             }
             connection.close();
-            connection = DriverManager.getConnection(
-                    "jdbc:postgresql://" + host + ":5432/" + database + "?user=" + user + "&password=" + password);
-            DatabaseMetaData dbmd = connection.getMetaData();
-            ResultSet resultTables = dbmd.getTables(null, null, database, null);
-            if (resultTables.next()) {
-                System.out.println("Creating Table...starting app next");
-                Statement statement = connection.createStatement();
-                statement.executeUpdate("CREATE TABLE userData (userID int, deleteCode varchar)");
-                statement.executeUpdate("CREATE TABLE userLocation (userID int, geolocation float)");
-            } else {
-                System.out.println("Table already exists...starting app");
+            connection = DriverManager.getConnection("jdbc:postgresql://" + host + ":5432/" + database + "?user=" + user + "&password=" + password);
+            Statement statement = connection.createStatement();
+
+            ResultSet result = statement.executeQuery("select COUNT(*) from pg_catalog.pg_tables where tablename = 'userdata'");
+
+            if(result.next()){
+               int resultString = result.getInt(1);
+                if(resultString == 0){
+                    System.out.println("Creating Table userData...creating table userLocation next");
+                    statement.executeUpdate("CREATE TABLE userData (userID int, deleteCode varchar)");
+                } else {
+                    System.out.println("Table userData already exists...creating table userLocation");
+                }
             }
+
+            result = statement.executeQuery("select COUNT(*) from pg_catalog.pg_tables where tablename = 'userlocation'");
+
+            if(result.next()){
+                int resultString = result.getInt(1);
+                if(resultString == 0){
+                    System.out.println("Creating Table userLocation...starting app next");
+                    statement.executeUpdate("CREATE TABLE userLocation (userID int, geolocation float)");
+                } else {
+                    System.out.println("Table userLocation already exists...starting app");
+                }
+            }
+            System.out.println("TEST");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
