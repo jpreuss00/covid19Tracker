@@ -3,15 +3,36 @@
  */
 package covid19Tracker;
 
+import covid19Tracker.infrastructure.database.InitDatabase;
 import covid19Tracker.infrastructure.web.Webserver;
 
 public class Main {
-    public String getGreeting() {
-        return "Hello world.";
-    }
 
     public static void main(String[] args) throws Exception {
-        System.out.println(new Main().getGreeting());
+        String database_url = System.getenv("DATABASE_URL");
+        String host = "";
+        String user = "";
+        String password = "";
+        String database = "";
+
+        if(database_url != null && !database_url.isEmpty()){
+            host = database_url.substring(91, 131);
+            user = database_url.substring(11, 25);
+            password = database_url.substring(26, 90);
+            database = database_url.substring(137, 151);
+        } else {
+            host = System.getenv("DBHOST");
+            user = System.getenv("DBUSER");
+            password = System.getenv("DBPWD");
+            database = System.getenv("DB");
+        }
+
+        if(host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty() || database == null || database.isEmpty()){
+            System.err.println("Missing environment variables");
+            System.exit(1);
+        }
+        System.out.printf("Starting app with host: %s, user: %s, database: %s \n",host,user,database);
         new Webserver().startJetty();
+        new InitDatabase(host, user, password, database).initiateDatabase();
     }
 }
