@@ -16,7 +16,7 @@
 <table>
   <tr>
     <th><b>userID</b></th>
-    <th><b>delteCode</b></th>
+    <th><b>deleteCode</b></th>
   </tr>
   <tr>
     <td>7384</td>
@@ -94,8 +94,8 @@
 - extreme cycle: alle Aufgaben nach und nach erledigen, es gibt keine Bedingung um eine Aufgabe zu starten.
 
 # Lese das 4te Kapitel von Implementation Patterns "Motivation" und erkläre die Kosten eines Software-Projekts. Sind alle Projekte gleich?
-- total cost = development cost + maintenance cost
-- maintenance cost = understanding cost + changing cost + testing cost + deployment cost
+- die Gesamtkosten bestehen zum einen aus den kosten, die bei der Entwicklung entstehen und zum anderen aus den Kosten, die bei der Wartung entstehen
+- die Wartungskosten setzen sich aus den folgenden vier Aspekten zusammen: die aufgewendete Zeit um die App zu verstehen, die Zeit um die App zu ändern, die Zeit die zum Testen benötigt wird und die Zeit um die App Einsatzbereit zu machen
 
 # Wann gelten die Aussagen von Kent Beck nicht? 
 - Wenn keine Kommunikation zwischen den Programmierern besteht.
