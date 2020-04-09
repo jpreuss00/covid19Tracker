@@ -92,6 +92,8 @@
 # Erkläre den extreme programming cycle... gibts dort auch Milestones?
 - normaler cycle: linear
 - extreme cycle: alle Aufgaben nach und nach erledigen, es gibt keine Bedingung um eine Aufgabe zu starten.
+- im extreme programming cycle wird mit releases gearbeitet, ein Release beschreibt hierbei eine Vorversion der Applikation, welche die vorher bestimmten Features beinhalten muss
+- der Unterschied zum Milestone ist hierbei, dass ein Milestone das erreichen eines Ziels bestimmt und die Apllikation dann nicht schon in einer abgespeckten Version verfügbar und funktionsfähig sein muss. Ein Milestone könnte z.B. die Fertigstellung einer Registery sein, am Ende des Milestone kann man sich dann z.B. erfolgreich in die Website einloggen und hat den Milestone fertiggestellt, die Website hat jedoch noch keinerlei Funktionen und kann noch nicht benutzt werden, wie es bei einem erfolgreichen release das Ziel währe
 
 # Lese das 4te Kapitel von Implementation Patterns "Motivation" und erkläre die Kosten eines Software-Projekts. Sind alle Projekte gleich?
 - die Gesamtkosten bestehen zum einen aus den kosten, die bei der Entwicklung entstehen und zum anderen aus den Kosten, die bei der Wartung entstehen
