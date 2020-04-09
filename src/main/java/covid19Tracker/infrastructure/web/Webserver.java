@@ -11,6 +11,8 @@ public class Webserver {
 
         health.setAllowNullPathInfo(true);
 
+        health.setHandler(new HealthEndpoint());
+
         ContextHandlerCollection contexts = new ContextHandlerCollection(health);
 
         String port = System.getenv("PORT");
