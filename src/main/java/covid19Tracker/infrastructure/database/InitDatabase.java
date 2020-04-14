@@ -59,7 +59,6 @@ public class InitDatabase {
                     System.out.println("Table userLocation already exists...starting app");
                 }
             }
-            System.out.println("TEST");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
