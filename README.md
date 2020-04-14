@@ -4,6 +4,7 @@
 
 - https://enigmatic-retreat-23877.herokuapp.com/
 - https://enigmatic-retreat-23877.herokuapp.com/health/
+- https://enigmatic-retreat-23877.herokuapp.com/register?registration=true
 
 # Als CovidTracker Nutzer möchte ich informiert werden, wenn in meiner näheren Umgebung ein Covid Positiv Mensch sich aufhält.
 -	Alle 5 Minuten wird ein Standort check gemacht
