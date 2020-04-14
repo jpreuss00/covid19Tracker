@@ -1,5 +1,10 @@
 # CovidTracker
 
+# Links
+
+- https://enigmatic-retreat-23877.herokuapp.com/
+- https://enigmatic-retreat-23877.herokuapp.com/health/
+
 # Als CovidTracker Nutzer möchte ich informiert werden, wenn in meiner näheren Umgebung ein Covid Positiv Mensch sich aufhält.
 -	Alle 5 Minuten wird ein Standort check gemacht
 -	Falls User nah aneinander sind (2Meter?) Nutzer informieren – über Browser Notifications ?
