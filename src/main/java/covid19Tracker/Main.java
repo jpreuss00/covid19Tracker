@@ -4,8 +4,12 @@
 package covid19Tracker;
 
 import covid19Tracker.infrastructure.UserGenerator;
+import covid19Tracker.infrastructure.database.ConnectToDatabase;
 import covid19Tracker.infrastructure.database.InitDatabase;
+import covid19Tracker.infrastructure.database.InsertInDatabase;
 import covid19Tracker.infrastructure.web.Webserver;
+
+import java.sql.Connection;
 
 public class Main {
 
@@ -32,13 +36,17 @@ public class Main {
             System.err.println("Missing environment variables");
             System.exit(1);
         }
-        System.out.printf("Starting app with host: %s, user: %s, database: %s , password %s\n",host,user,database,password);
+        System.out.printf("Starting app with host: %s, user: %s, database: %s, password %s\n",host,user,database,password);
 
         InitDatabase initDatabase = new InitDatabase(host, user, password, database);
         initDatabase.initiateDatabase();
 
         UserGenerator userGenerator = new UserGenerator();
 
-        new Webserver(userGenerator).startJetty();
+        ConnectToDatabase connectToDatabase = new ConnectToDatabase(host, user, password, database);
+        Connection connection = connectToDatabase.connect();
+        InsertInDatabase insertInDatabase = new InsertInDatabase(connection);
+
+        new Webserver(userGenerator, insertInDatabase).startJetty();
     }
 }

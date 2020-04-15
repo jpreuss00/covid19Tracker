@@ -1,9 +1,9 @@
 package covid19Tracker.infrastructure.web;
 
 import covid19Tracker.infrastructure.UserGenerator;
+import covid19Tracker.infrastructure.database.InsertInDatabase;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.eclipse.jetty.util.ajax.JSON;
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +13,11 @@ import java.io.IOException;
 public class RegisterEndpoint extends AbstractHandler {
 
     private final UserGenerator userGenerator;
+    private final InsertInDatabase insertInDatabase;
 
-    public RegisterEndpoint(UserGenerator userGenerator){
+    public RegisterEndpoint(UserGenerator userGenerator, InsertInDatabase insertInDatabase){
         this.userGenerator = userGenerator;
+        this.insertInDatabase = insertInDatabase;
     }
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -32,12 +34,19 @@ public class RegisterEndpoint extends AbstractHandler {
 
         if(registration.equals("true")){
            userID = userGenerator.getRandomUserID();
-           deleteCode = userGenerator.getRandomDeleteCode();
+           while(insertInDatabase.checkForDoubles(userID)){
+               userID = userGenerator.getRandomUserID();
+           }
+           deleteCode = userID+"#"+userGenerator.getRandomDeleteCode();
+        }
+
+        if(!insertInDatabase.insertInDB(userID, deleteCode)){
+            response.setStatus(500);
         }
 
         JSONObject data = new JSONObject();
         JSONObject user = new JSONObject().put("userID", userID);
-        user.put("deleteCode", userID+"#"+deleteCode);
+        user.put("deleteCode", deleteCode);
         data.put("User", user);
         response.getWriter().print(data);
 

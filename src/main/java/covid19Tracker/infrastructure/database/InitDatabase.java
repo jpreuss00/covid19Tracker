@@ -59,6 +59,7 @@ public class InitDatabase {
                     System.out.println("Table userLocation already exists...starting app");
                 }
             }
+            System.out.println("InitDatabase.initiateDatabase: Database has been initialized.");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
