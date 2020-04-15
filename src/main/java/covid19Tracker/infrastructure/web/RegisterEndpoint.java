@@ -37,7 +37,7 @@ public class RegisterEndpoint extends AbstractHandler {
 
         JSONObject data = new JSONObject();
         JSONObject user = new JSONObject().put("userID", userID);
-        user.put("deleteCode", deleteCode);
+        user.put("deleteCode", userID+"#"+deleteCode);
         data.put("User", user);
         response.getWriter().print(data);
 
