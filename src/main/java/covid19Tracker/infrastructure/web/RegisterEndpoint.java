@@ -1,7 +1,7 @@
 package covid19Tracker.infrastructure.web;
 
-import covid19Tracker.infrastructure.UserGenerator;
-import covid19Tracker.infrastructure.database.InsertInDatabase;
+import covid19Tracker.application.AccountService;
+import covid19Tracker.domain.User;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.json.JSONObject;
@@ -12,42 +12,30 @@ import java.io.IOException;
 
 public class RegisterEndpoint extends AbstractHandler {
 
-    private final UserGenerator userGenerator;
-    private final InsertInDatabase insertInDatabase;
 
-    public RegisterEndpoint(UserGenerator userGenerator, InsertInDatabase insertInDatabase){
-        this.userGenerator = userGenerator;
-        this.insertInDatabase = insertInDatabase;
+    private final AccountService accountService;
+
+    public RegisterEndpoint(AccountService accountService){
+        this.accountService = accountService;
     }
+
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Headers", "*");
 
-        String registration = "";
-        int userID = 0;
-        String deleteCode = "";
 
         if (request.getParameter("registration") != null) {
-            registration = request.getParameter("registration");
+            String registration = request.getParameter("registration");
         }
 
-        if(registration.equals("true")){
-           userID = userGenerator.getRandomUserID();
-           while(insertInDatabase.checkForDoubles(userID)){
-               userID = userGenerator.getRandomUserID();
-           }
-           deleteCode = userID+"#"+userGenerator.getRandomDeleteCode();
-        }
-
-        if(!insertInDatabase.insertInDB(userID, deleteCode)){
+        User user = accountService.register();
+        if(user == null){
             response.setStatus(500);
         }
 
-        JSONObject data = new JSONObject();
-        JSONObject user = new JSONObject().put("userID", userID);
-        user.put("deleteCode", deleteCode);
-        data.put("User", user);
+        JSONObject data = new JSONObject().put("userID", user.userID);
+        data.put("deleteCode", user.deleteCode);
         response.getWriter().print(data);
 
         baseRequest.setHandled(true);

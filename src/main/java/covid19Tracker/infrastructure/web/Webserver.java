@@ -1,20 +1,16 @@
 package covid19Tracker.infrastructure.web;
 
-import covid19Tracker.infrastructure.UserGenerator;
-import covid19Tracker.infrastructure.database.InitDatabase;
-import covid19Tracker.infrastructure.database.InsertInDatabase;
+import covid19Tracker.application.AccountService;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
 public class Webserver {
 
-    private final UserGenerator userGenerator;
-    private final InsertInDatabase InsertInDatabase;
+    private final AccountService accountService;
 
-    public Webserver(UserGenerator userGenerator, InsertInDatabase InsertInDatabase){
-        this.userGenerator = userGenerator;
-        this.InsertInDatabase = InsertInDatabase;
+    public Webserver(AccountService accountService){
+        this.accountService = accountService;
     }
 
     public void startJetty() throws Exception {
@@ -26,7 +22,7 @@ public class Webserver {
         register.setAllowNullPathInfo(true);
 
         health.setHandler(new HealthEndpoint());
-        register.setHandler(new RegisterEndpoint(userGenerator, InsertInDatabase));
+        register.setHandler(new RegisterEndpoint(accountService));
 
         ContextHandlerCollection contexts = new ContextHandlerCollection(health, register);
 

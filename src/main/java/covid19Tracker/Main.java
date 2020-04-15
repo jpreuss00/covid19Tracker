@@ -3,6 +3,7 @@
  */
 package covid19Tracker;
 
+import covid19Tracker.application.AccountService;
 import covid19Tracker.infrastructure.UserGenerator;
 import covid19Tracker.infrastructure.database.ConnectToDatabase;
 import covid19Tracker.infrastructure.database.InitDatabase;
@@ -46,7 +47,8 @@ public class Main {
         ConnectToDatabase connectToDatabase = new ConnectToDatabase(host, user, password, database);
         Connection connection = connectToDatabase.connect();
         InsertInDatabase insertInDatabase = new InsertInDatabase(connection);
+        AccountService accountService = new AccountService(userGenerator, insertInDatabase);
 
-        new Webserver(userGenerator, insertInDatabase).startJetty();
+        new Webserver(accountService).startJetty();
     }
 }
