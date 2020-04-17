@@ -31,7 +31,7 @@ public class DeleteEndpoint extends AbstractHandler {
             String deleteCode = request.getParameter("deleteCode");
             if(deleteInDatabase.validateCode(deleteCode)){
                 deleteInDatabase.deleteUser(deleteCode);
-                data.put("deleteStatus", "succesfull");
+                data.put("deleteStatus", "successful");
             } else {
                 data.put("deleteStatus", "non-existent");
             }
