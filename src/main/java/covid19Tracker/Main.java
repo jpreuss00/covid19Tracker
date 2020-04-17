@@ -6,8 +6,10 @@ package covid19Tracker;
 import covid19Tracker.application.AccountService;
 import covid19Tracker.infrastructure.UserGenerator;
 import covid19Tracker.infrastructure.database.ConnectToDatabase;
+import covid19Tracker.infrastructure.database.DeleteInDatabase;
 import covid19Tracker.infrastructure.database.InitDatabase;
 import covid19Tracker.infrastructure.database.InsertInDatabase;
+import covid19Tracker.infrastructure.web.CorsHandler;
 import covid19Tracker.infrastructure.web.Webserver;
 
 import java.sql.Connection;
@@ -42,13 +44,17 @@ public class Main {
         InitDatabase initDatabase = new InitDatabase(host, user, password, database);
         initDatabase.initiateDatabase();
 
-        UserGenerator userGenerator = new UserGenerator();
-
         ConnectToDatabase connectToDatabase = new ConnectToDatabase(host, user, password, database);
         Connection connection = connectToDatabase.connect();
+
+        DeleteInDatabase deleteInDatabase = new DeleteInDatabase(connection);
+        deleteInDatabase.validateCode("1234#abcde");
         InsertInDatabase insertInDatabase = new InsertInDatabase(connection);
+
+        UserGenerator userGenerator = new UserGenerator();
         AccountService accountService = new AccountService(userGenerator, insertInDatabase);
 
-        new Webserver(accountService).startJetty();
+        CorsHandler corsHandler = new CorsHandler();
+        new Webserver(accountService, corsHandler, deleteInDatabase).startJetty();
     }
 }

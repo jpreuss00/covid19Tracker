@@ -26,6 +26,7 @@ dependencies {
 
     // Use JUnit test framework
     testImplementation("junit:junit:4.12")
+    testCompile("org.mockito:mockito-core:3.3.3")
 
     implementation("org.postgresql:postgresql:42.2.10")
     implementation("org.json:json:20190722")

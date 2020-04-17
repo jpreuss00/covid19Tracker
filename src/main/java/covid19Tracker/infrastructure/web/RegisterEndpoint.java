@@ -13,36 +13,43 @@ import java.io.IOException;
 
 public class RegisterEndpoint extends AbstractHandler {
 
-
     private final AccountService accountService;
+    private final CorsHandler corsHandler;
 
-    public RegisterEndpoint(AccountService accountService){
+    public RegisterEndpoint(AccountService accountService, CorsHandler corsHandler){
         this.accountService = accountService;
+        this.corsHandler = corsHandler;
     }
 
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "*");
+        corsHandler.handleCors(request, response);
+        baseRequest.setHandled(true);
 
-        String registration = "";
-
-        if (request.getParameter("registration") != null) {
-            registration = request.getParameter("registration");
+        User user = accountService.register();
+        if (user == null) {
+            response.setStatus(500);
+            return;
         }
 
-        if (registration.equals("true")) {
-            User user = accountService.register();
-            if (user == null) {
-                response.setStatus(500);
-            }
         JSONObject data = new JSONObject().put("id", user.userID);
         data.put("deletecode", user.deleteCode);
         response.setContentType(MimeTypes.Type.APPLICATION_JSON_UTF_8.asString());
         response.getWriter().print(data);
-        }
 
-        baseRequest.setHandled(true);
         System.out.println("Register Page is running...");
     }
 }
+
+/*
+
+3. cors incorrect host .. http call .. mit incorrect host
+
+erwartung
+
+
+
+1.
+unbekannter deletecode test
+2.
+ */
