@@ -48,7 +48,6 @@ public class Main {
         Connection connection = connectToDatabase.connect();
 
         DeleteInDatabase deleteInDatabase = new DeleteInDatabase(connection);
-        deleteInDatabase.validateCode("1234#abcde");
         InsertInDatabase insertInDatabase = new InsertInDatabase(connection);
 
         UserGenerator userGenerator = new UserGenerator();
