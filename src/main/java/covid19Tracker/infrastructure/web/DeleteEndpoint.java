@@ -24,7 +24,7 @@ public class DeleteEndpoint extends AbstractHandler {
         corsHandler.handleCors(request, response);
         baseRequest.setHandled(true);
 
-        if (request.getParameter("deleteCode") != null || !request.getParameter("deleteCode").isEmpty()) {
+        if (request.getParameter("deleteCode") != null && !request.getParameter("deleteCode").isEmpty()) {
             String deleteCode = request.getParameter("deleteCode");
             if (accountService.delete(deleteCode)) {
                 System.out.println("deleted user with valid deleteCode");
