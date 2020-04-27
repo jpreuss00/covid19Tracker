@@ -1,15 +1,9 @@
 package covid19Tracker.infrastructure.web;
 
 import covid19Tracker.application.AccountService;
-import covid19Tracker.domain.User;
-import covid19Tracker.infrastructure.database.DeleteInDatabase;
-import org.eclipse.jetty.http.MimeTypes;
 import org.eclipse.jetty.server.Request;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockingDetails;
 import org.mockito.Mockito;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +13,7 @@ import java.io.PrintWriter;
 
 public class DeleteEndpointTest {
 
-    private DeleteInDatabase deleteInDatabase;
+    private AccountService accountService;
     private DeleteEndpoint deleteEndpoint;
     private String target;
     private Request baseRequest;
@@ -29,12 +23,12 @@ public class DeleteEndpointTest {
 
     @Before
     public void setUp(){
+        this.accountService = Mockito.mock(AccountService.class);
         this.baseRequest = Mockito.mock(Request.class);
         this.request = Mockito.mock(HttpServletRequest.class);
         this.response = Mockito.mock(HttpServletResponse.class);
         this.corsHandler = Mockito.mock(CorsHandler.class);
-        this.deleteInDatabase = Mockito.mock(DeleteInDatabase.class);
-        this.deleteEndpoint = new DeleteEndpoint(corsHandler, deleteInDatabase);
+        this.deleteEndpoint = new DeleteEndpoint(accountService, corsHandler);
     }
 
     @Test
@@ -43,7 +37,7 @@ public class DeleteEndpointTest {
         String deleteCode = "1234#abcde";
 
         Mockito.doReturn(deleteCode).when(request).getParameter("deleteCode");
-        Mockito.doReturn(true).when(deleteInDatabase).validateCode(deleteCode);
+        Mockito.doReturn(true).when(accountService).delete(deleteCode);
 
         PrintWriter writer = Mockito.mock(PrintWriter.class);
         Mockito.doReturn(writer).when(response).getWriter();
@@ -59,7 +53,7 @@ public class DeleteEndpointTest {
         String deleteCode = "1234#abcde";
 
         Mockito.doReturn(deleteCode).when(request).getParameter("deleteCode");
-        Mockito.doReturn(false).when(deleteInDatabase).validateCode(deleteCode);
+        Mockito.doReturn(false).when(accountService).delete(deleteCode);
 
         PrintWriter writer = Mockito.mock(PrintWriter.class);
         Mockito.doReturn(writer).when(response).getWriter();
