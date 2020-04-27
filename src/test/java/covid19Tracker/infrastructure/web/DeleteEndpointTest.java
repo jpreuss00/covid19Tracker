@@ -38,7 +38,7 @@ public class DeleteEndpointTest {
     }
 
     @Test
-    public void handle_should_return_successful_for_ExistingCode() throws IOException {
+    public void handle_should_deleteUser_for_ExistingCode() throws IOException {
 
         String deleteCode = "1234#abcde";
 
@@ -50,12 +50,11 @@ public class DeleteEndpointTest {
 
         deleteEndpoint.handle(target, baseRequest, request, response);
 
-        Mockito.verify(response).setContentType(MimeTypes.Type.APPLICATION_JSON_UTF_8.asString());
-        Mockito.verify(writer).print(Mockito.any(JSONObject.class));
+        Mockito.verify(response).setStatus(204);
     }
 
     @Test
-    public void handle_should_return_nonexisting_for_nonexstingCode() throws  IOException{
+    public void handle_should_return_error_for_unknownCode() throws  IOException{
 
         String deleteCode = "1234#abcde";
 
@@ -67,31 +66,13 @@ public class DeleteEndpointTest {
 
         deleteEndpoint.handle(target, baseRequest, request, response);
 
-        Mockito.verify(response).setContentType(MimeTypes.Type.APPLICATION_JSON_UTF_8.asString());
-        Mockito.verify(writer).print(Mockito.any(JSONObject.class));
+        Mockito.verify(response).setStatus(404);
     }
 
     @Test
-    public void handle_should_return_nonexisting_for_wrongCodeTemplate() throws  IOException{
+    public void handle_should_return_error_for_emptyCode() throws  IOException{
 
-        String deleteCode = "12345/abcd";
-
-        Mockito.doReturn(deleteCode).when(request).getParameter("deleteCode");
-        Mockito.doReturn(false).when(deleteInDatabase).validateCode(deleteCode);
-
-        PrintWriter writer = Mockito.mock(PrintWriter.class);
-        Mockito.doReturn(writer).when(response).getWriter();
-
-        deleteEndpoint.handle(target, baseRequest, request, response);
-
-        Mockito.verify(response).setContentType(MimeTypes.Type.APPLICATION_JSON_UTF_8.asString());
-        Mockito.verify(writer).print(Mockito.any(JSONObject.class));
-    }
-
-    @Test
-    public void handle_should_return_empty_for_emptyCode() throws  IOException{
-
-        String deleteCode = "";
+        String deleteCode = null;
 
         Mockito.doReturn(deleteCode).when(request).getParameter("deleteCode");
 
@@ -100,8 +81,7 @@ public class DeleteEndpointTest {
 
         deleteEndpoint.handle(target, baseRequest, request, response);
 
-        Mockito.verify(response).setContentType(MimeTypes.Type.APPLICATION_JSON_UTF_8.asString());
-        Mockito.verify(writer).print(Mockito.any(JSONObject.class));
+        Mockito.verify(response).setStatus(400);
     }
 
 }

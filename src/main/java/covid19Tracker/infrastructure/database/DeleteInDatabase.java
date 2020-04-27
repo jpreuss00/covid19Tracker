@@ -26,11 +26,7 @@ public class DeleteInDatabase {
     public boolean validateCode(String deleteCode){
 
         if(deleteCode.length() == 10){
-            String first = deleteCode.substring(0, 4);
-            String second = deleteCode.substring(4, 5);
-            String third = deleteCode.substring(5, 10);
-            System.out.printf("first: %s second: %s third: %s",first,second,third);
-            if(first.matches("[0-9]") && second.equals("#") && third.matches("[a-z]")){
+            if(deleteCode.matches("\\d{4}#[a-z]{5}")){
                 try{
                     PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT (*) FROM userdata WHERE deletecode = ?");
                     preparedStatement.setString(1, deleteCode);
@@ -43,7 +39,7 @@ public class DeleteInDatabase {
                 } catch (Exception e){
                 System.err.println(e.getClass().getName() + ": " + e.getMessage());
                 System.exit(0);
-            }
+                }
             }
         } else {
             return false;

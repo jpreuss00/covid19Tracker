@@ -51,9 +51,9 @@ public class Main {
         InsertInDatabase insertInDatabase = new InsertInDatabase(connection);
 
         UserGenerator userGenerator = new UserGenerator();
-        AccountService accountService = new AccountService(userGenerator, insertInDatabase);
+        AccountService accountService = new AccountService(userGenerator, insertInDatabase, deleteInDatabase);
 
         CorsHandler corsHandler = new CorsHandler();
-        new Webserver(accountService, corsHandler, deleteInDatabase).startJetty();
+        new Webserver(accountService, corsHandler).startJetty();
     }
 }

@@ -2,16 +2,19 @@ package covid19Tracker.application;
 
 import covid19Tracker.domain.User;
 import covid19Tracker.infrastructure.UserGenerator;
+import covid19Tracker.infrastructure.database.DeleteInDatabase;
 import covid19Tracker.infrastructure.database.InsertInDatabase;
 
 public class AccountService {
 
     private final UserGenerator userGenerator;
     private final InsertInDatabase insertInDatabase;
+    private final DeleteInDatabase deleteInDatabase;
 
-    public AccountService(UserGenerator userGenerator, InsertInDatabase insertInDatabase){
+    public AccountService(UserGenerator userGenerator, InsertInDatabase insertInDatabase, DeleteInDatabase deleteInDatabase){
         this.userGenerator = userGenerator;
         this.insertInDatabase = insertInDatabase;
+        this.deleteInDatabase = deleteInDatabase;
     }
 
     public User register(){
@@ -29,7 +32,12 @@ public class AccountService {
         return new User(userID, deleteCode);
     }
 
-    public void delete(String deleteCode){
-
+    public boolean delete(String deleteCode){
+        if (deleteInDatabase.validateCode(deleteCode)) {
+            deleteInDatabase.deleteUser(deleteCode);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

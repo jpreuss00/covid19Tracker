@@ -1,10 +1,9 @@
 package covid19Tracker.infrastructure.web;
 
+import covid19Tracker.application.AccountService;
 import covid19Tracker.infrastructure.database.DeleteInDatabase;
-import org.eclipse.jetty.http.MimeTypes;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,12 +11,12 @@ import java.io.IOException;
 
 public class DeleteEndpoint extends AbstractHandler {
 
+    private final AccountService accountService;
     private final CorsHandler corsHandler;
-    private final DeleteInDatabase deleteInDatabase;
 
-    public DeleteEndpoint(CorsHandler corsHandler, DeleteInDatabase deleteInDatabase){
+    public DeleteEndpoint(AccountService accountService, CorsHandler corsHandler) {
+        this.accountService = accountService;
         this.corsHandler = corsHandler;
-        this.deleteInDatabase = deleteInDatabase;
     }
 
     @Override
@@ -25,23 +24,19 @@ public class DeleteEndpoint extends AbstractHandler {
         corsHandler.handleCors(request, response);
         baseRequest.setHandled(true);
 
-        JSONObject data = new JSONObject();
-
-        if (request.getParameter("deleteCode") != null) {
+        if (request.getParameter("deleteCode") != null || !request.getParameter("deleteCode").isEmpty()) {
             String deleteCode = request.getParameter("deleteCode");
-            if(deleteInDatabase.validateCode(deleteCode)){
-                deleteInDatabase.deleteUser(deleteCode);
-                data.put("deleteStatus", "successful");
+            if (accountService.delete(deleteCode)) {
+                System.out.println("deleted user with valid deleteCode");
+                response.setStatus(204);
             } else {
-                data.put("deleteStatus", "non-existent");
+                System.out.println("wrong deleteCode");
+                response.setStatus(404);
             }
         } else {
-            data.put("deleteStatus", "empty");
+            System.out.println("missing deleteCode");
+            response.setStatus(400);
         }
-
-        response.setContentType(MimeTypes.Type.APPLICATION_JSON_UTF_8.asString());
-        response.getWriter().print(data);
-
         System.out.println("Delete Page is running...");
     }
 }

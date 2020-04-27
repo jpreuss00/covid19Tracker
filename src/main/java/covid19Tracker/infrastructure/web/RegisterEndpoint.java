@@ -40,16 +40,3 @@ public class RegisterEndpoint extends AbstractHandler {
         System.out.println("Register Page is running...");
     }
 }
-
-/*
-
-3. cors incorrect host .. http call .. mit incorrect host
-
-erwartung
-
-
-
-1.
-unbekannter deletecode test
-2.
- */

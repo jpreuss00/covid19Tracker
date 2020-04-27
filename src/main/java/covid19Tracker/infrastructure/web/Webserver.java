@@ -12,12 +12,10 @@ public class Webserver {
 
     private final AccountService accountService;
     private final CorsHandler corsHandler;
-    private final DeleteInDatabase deleteInDatabase;
 
-    public Webserver(AccountService accountService, CorsHandler corsHandler, DeleteInDatabase deleteInDatabase){
+    public Webserver(AccountService accountService, CorsHandler corsHandler){
         this.accountService = accountService;
         this.corsHandler = corsHandler;
-        this.deleteInDatabase = deleteInDatabase;
     }
 
     public void startJetty() throws Exception {
@@ -32,7 +30,7 @@ public class Webserver {
 
         health.setHandler(new HealthEndpoint());
         register.setHandler(new RegisterEndpoint(accountService, corsHandler));
-        delete.setHandler(new DeleteEndpoint(corsHandler, deleteInDatabase));
+        delete.setHandler(new DeleteEndpoint(accountService, corsHandler));
 
         ContextHandlerCollection contexts = new ContextHandlerCollection(health, register, delete);
 
