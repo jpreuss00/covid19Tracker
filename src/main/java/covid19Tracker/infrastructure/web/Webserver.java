@@ -23,18 +23,22 @@ public class Webserver {
         final ContextHandler health = new ContextHandler("/health");
         final ContextHandler register = new ContextHandler("/register");
         final ContextHandler delete = new ContextHandler("/delete");
+        final ContextHandler sighting = new ContextHandler("/sighting");
 
         health.setAllowNullPathInfo(true);
         register.setAllowNullPathInfo(true);
         delete.setAllowNullPathInfo(true);
+        sighting.setAllowNullPathInfo(true);
 
         health.setHandler(new HealthEndpoint());
         register.setHandler(new RegisterEndpoint(accountService, corsHandler));
         delete.setHandler(new DeleteEndpoint(accountService, corsHandler));
+        sighting.setHandler(new SightingEndpoint(corsHandler));
 
-        ContextHandlerCollection contexts = new ContextHandlerCollection(health, register, delete);
+        ContextHandlerCollection contexts = new ContextHandlerCollection(health, register, delete, sighting);
 
         String port = System.getenv("PORT");
+
         if (port == null) {
             port = "8080";
         }

@@ -26,7 +26,7 @@ public class AccountService {
 
            String deleteCode = userID+"#"+userGenerator.getRandomDeleteCode();
 
-        if(!insertInDatabase.insertInDB(userID, deleteCode)){
+        if(!insertInDatabase.insertNewUserInDB(userID, deleteCode)){
             return null;
         }
         return new User(userID, deleteCode);
