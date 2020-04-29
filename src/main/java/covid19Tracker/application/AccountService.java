@@ -11,28 +11,28 @@ public class AccountService {
     private final InsertInDatabase insertInDatabase;
     private final DeleteInDatabase deleteInDatabase;
 
-    public AccountService(UserGenerator userGenerator, InsertInDatabase insertInDatabase, DeleteInDatabase deleteInDatabase){
+    public AccountService(UserGenerator userGenerator, InsertInDatabase insertInDatabase, DeleteInDatabase deleteInDatabase) {
         this.userGenerator = userGenerator;
         this.insertInDatabase = insertInDatabase;
         this.deleteInDatabase = deleteInDatabase;
     }
 
-    public User register(){
+    public User register() {
 
-            int userID = userGenerator.getRandomUserID();
-            while(insertInDatabase.checkForDoubles(userID)){
-                userID = userGenerator.getRandomUserID();
-            }
+        int userID = userGenerator.getRandomUserID();
+        while (insertInDatabase.checkForDoubles(userID)) {
+            userID = userGenerator.getRandomUserID();
+        }
 
-           String deleteCode = userID+"#"+userGenerator.getRandomDeleteCode();
+        String deleteCode = userID + "#" + userGenerator.getRandomDeleteCode();
 
-        if(!insertInDatabase.insertNewUserInDB(userID, deleteCode)){
+        if (!insertInDatabase.insertNewUserInDB(userID, deleteCode)) {
             return null;
         }
         return new User(userID, deleteCode);
     }
 
-    public boolean delete(String deleteCode){
+    public boolean delete(String deleteCode) {
         if (deleteInDatabase.validateCode(deleteCode)) {
             deleteInDatabase.deleteUser(deleteCode);
             return true;

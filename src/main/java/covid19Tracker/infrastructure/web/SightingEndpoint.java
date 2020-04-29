@@ -15,7 +15,7 @@ public class SightingEndpoint extends AbstractHandler {
     private SightingRepository sightingRepository;
     private final CorsHandler corsHandler;
 
-    public SightingEndpoint(SightingRepository sightingRepository, CorsHandler corsHandler){
+    public SightingEndpoint(SightingRepository sightingRepository, CorsHandler corsHandler) {
         this.sightingRepository = sightingRepository;
         this.corsHandler = corsHandler;
     }
@@ -28,19 +28,23 @@ public class SightingEndpoint extends AbstractHandler {
         double latitude = 0;
         double longitude = 0;
 
-        if (request.getParameter("userID") != null){
+        if (request.getParameter("userID") != null) {
             userID = Integer.parseInt(request.getParameter("userID"));
         }
-        if (request.getParameter("latitude") != null){
+        if (request.getParameter("latitude") != null) {
             latitude = Double.parseDouble(request.getParameter("latitude"));
         }
-        if (request.getParameter("longitude") != null){
+        if (request.getParameter("longitude") != null) {
             longitude = Double.parseDouble(request.getParameter("latitude"));
         }
         Date date = new Date();
-        if(userID != 0 && latitude != 0 && longitude != 0){
+        if (userID != 0 && latitude != 0 && longitude != 0) {
             Sighting sighting = new Sighting(latitude, longitude, date);
             sightingRepository.insertNewSightingInDB(userID, sighting);
+            response.setStatus(204);
+        } else {
+            response.setStatus(400);
+            return;
         }
         System.out.println("Sighting Page is running...");
     }

@@ -50,4 +50,5 @@ public class SightingTest {
         System.out.println("Fourth Test: ");
         assertTrue(sighting.closeTo(otherSighting));
     }
+
 }

@@ -16,7 +16,7 @@ public class RegisterEndpoint extends AbstractHandler {
     private final AccountService accountService;
     private final CorsHandler corsHandler;
 
-    public RegisterEndpoint(AccountService accountService, CorsHandler corsHandler){
+    public RegisterEndpoint(AccountService accountService, CorsHandler corsHandler) {
         this.accountService = accountService;
         this.corsHandler = corsHandler;
     }

@@ -8,37 +8,37 @@ public class DeleteInDatabase {
 
     private final Connection connection;
 
-    public DeleteInDatabase(Connection connection){
+    public DeleteInDatabase(Connection connection) {
         this.connection = connection;
     }
 
-    public void deleteUser(String deleteCode){
-        try{
+    public void deleteUser(String deleteCode) {
+        try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM userdata WHERE deletecode = ?");
             preparedStatement.setString(1, deleteCode);
             preparedStatement.executeUpdate();
-        } catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
 
-    public boolean validateCode(String deleteCode){
+    public boolean validateCode(String deleteCode) {
 
-        if(deleteCode.length() == 10){
-            if(deleteCode.matches("\\d{4}#[a-z]{5}")){
-                try{
+        if (deleteCode.length() == 10) {
+            if (deleteCode.matches("\\d{4}#[a-z]{5}")) {
+                try {
                     PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT (*) FROM userdata WHERE deletecode = ?");
                     preparedStatement.setString(1, deleteCode);
                     ResultSet resultSet = preparedStatement.executeQuery();
-                    if(resultSet.next()){
+                    if (resultSet.next()) {
                         return (resultSet.getInt(1) > 0);
                     } else {
                         return false;
                     }
-                } catch (Exception e){
-                System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                System.exit(0);
+                } catch (Exception e) {
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    System.exit(0);
                 }
             }
         } else {

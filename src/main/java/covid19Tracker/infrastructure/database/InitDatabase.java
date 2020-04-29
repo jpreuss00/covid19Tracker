@@ -17,7 +17,7 @@ public class InitDatabase {
         this.database = database;
     }
 
-    public boolean initiateDatabase(){
+    public boolean initiateDatabase() {
         try {
             String url = "jdbc:postgresql://" + host + ":5432/" + database;
             connection = DriverManager.getConnection(url, user, password);
@@ -38,9 +38,9 @@ public class InitDatabase {
 
             ResultSet result = statement.executeQuery("select COUNT(*) from pg_catalog.pg_tables where tablename = 'userdata'");
 
-            if(result.next()){
-               int resultString = result.getInt(1);
-                if(resultString == 0){
+            if (result.next()) {
+                int resultString = result.getInt(1);
+                if (resultString == 0) {
                     System.out.println("Creating Table userData...creating table userLocation next");
                     statement.executeUpdate("CREATE TABLE userData (userID int, deleteCode varchar)");
                 } else {
@@ -50,9 +50,9 @@ public class InitDatabase {
 
             result = statement.executeQuery("select COUNT(*) from pg_catalog.pg_tables where tablename = 'userlocation'");
 
-            if(result.next()){
+            if (result.next()) {
                 int resultString = result.getInt(1);
-                if(resultString == 0){
+                if (resultString == 0) {
                     System.out.println("Creating Table userLocation...starting app next");
                     statement.executeUpdate("CREATE TABLE userLocation (userID int, latitude double precision, longitude double precision, instant Date)");
                 } else {

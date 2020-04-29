@@ -5,6 +5,7 @@ package covid19Tracker;
 
 import covid19Tracker.application.AccountService;
 import covid19Tracker.application.SightingRepository;
+import covid19Tracker.application.SightingService;
 import covid19Tracker.infrastructure.UserGenerator;
 import covid19Tracker.infrastructure.database.ConnectToDatabase;
 import covid19Tracker.infrastructure.database.DeleteInDatabase;
@@ -24,7 +25,7 @@ public class Main {
         String password = "";
         String database = "";
 
-        if(database_url != null && !database_url.isEmpty()){
+        if (database_url != null && !database_url.isEmpty()) {
             host = database_url.substring(91, 132);
             user = database_url.substring(11, 25);
             password = database_url.substring(26, 90);
@@ -36,11 +37,11 @@ public class Main {
             database = System.getenv("DB");
         }
 
-        if(host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty() || database == null || database.isEmpty()){
+        if (host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty() || database == null || database.isEmpty()) {
             System.err.println("Missing environment variables");
             System.exit(1);
         }
-        System.out.printf("Starting app with host: %s, user: %s, database: %s, password %s\n",host,user,database,password);
+        System.out.printf("Starting app with host: %s, user: %s, database: %s, password %s\n", host, user, database, password);
 
         InitDatabase initDatabase = new InitDatabase(host, user, password, database);
         initDatabase.initiateDatabase();
@@ -55,8 +56,9 @@ public class Main {
         AccountService accountService = new AccountService(userGenerator, insertInDatabase, deleteInDatabase);
 
         SightingRepository sightingRepository = new SightingRepository(connection);
+        SightingService sightingService = new SightingService();
 
         CorsHandler corsHandler = new CorsHandler();
-        new Webserver(accountService, sightingRepository, corsHandler).startJetty();
+        new Webserver(accountService, sightingRepository, sightingService, corsHandler).startJetty();
     }
 }

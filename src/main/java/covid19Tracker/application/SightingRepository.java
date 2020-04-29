@@ -31,20 +31,25 @@ public class SightingRepository {
         }
     }
 
-    public List<Sighting> getSightingsOutOfDB(int userID) {
+    public List<Sighting> getSightingsOutOfDBInNear(Sighting sighting) {
         try {
             List<Sighting> sightings = new ArrayList<>();
-
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT(*) FROM userLocation WHERE userID = ?");
-            preparedStatement.setInt(1, userID);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT (*) FROM userLocation WHERE (latitude BETWEEN ? AND ?) AND (longitude BETWEEN ? AND ?)");
+            preparedStatement.setDouble(1, (sighting.getLatitude() - 0.001));
+            preparedStatement.setDouble(2, (sighting.getLatitude() + 0.001));
+            preparedStatement.setDouble(3, (sighting.getLongitude() - 0.001));
+            preparedStatement.setDouble(4, (sighting.getLongitude() + 0.001));
             ResultSet result = preparedStatement.executeQuery();
             int limit = 0;
             if (result.next()) {
                 limit = result.getInt(1);
             }
             if (limit > 0) {
-                preparedStatement = connection.prepareStatement("SELECT * FROM userLocation WHERE userID = ?");
-                preparedStatement.setInt(1, userID);
+                preparedStatement = connection.prepareStatement("SELECT * FROM userLocation WHERE (latitude BETWEEN ? AND ?) AND (longitude BETWEEN ? AND ?)");
+                preparedStatement.setDouble(1, (sighting.getLatitude() - 0.001));
+                preparedStatement.setDouble(2, (sighting.getLatitude() + 0.001));
+                preparedStatement.setDouble(3, (sighting.getLongitude() - 0.001));
+                preparedStatement.setDouble(4, (sighting.getLongitude() + 0.001));
                 result = preparedStatement.executeQuery();
 
                 for (int i = 0; i < limit; i++) {
@@ -65,17 +70,18 @@ public class SightingRepository {
                                     break;
                                 case 4:
                                     date = result.getDate(j);
-                                    ;
                                     break;
                             }
                         }
-                        Sighting sighting = new Sighting(latitude, longitude, date);
-                        sightings.add(sighting);
+                        Sighting newSighting = new Sighting(latitude, longitude, date);
+                        sightings.add(newSighting);
                     } else {
                         break;
                     }
                 }
                 return sightings;
+            } else {
+                return null;
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
