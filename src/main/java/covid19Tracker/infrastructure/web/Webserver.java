@@ -1,6 +1,7 @@
 package covid19Tracker.infrastructure.web;
 
 import covid19Tracker.application.AccountService;
+import covid19Tracker.application.SightingRepository;
 import covid19Tracker.infrastructure.database.DeleteInDatabase;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -12,9 +13,11 @@ public class Webserver {
 
     private final AccountService accountService;
     private final CorsHandler corsHandler;
+    private final SightingRepository sightingRepository;
 
-    public Webserver(AccountService accountService, CorsHandler corsHandler){
+    public Webserver(AccountService accountService, SightingRepository sightingRepository, CorsHandler corsHandler){
         this.accountService = accountService;
+        this.sightingRepository = sightingRepository;
         this.corsHandler = corsHandler;
     }
 
@@ -33,7 +36,7 @@ public class Webserver {
         health.setHandler(new HealthEndpoint());
         register.setHandler(new RegisterEndpoint(accountService, corsHandler));
         delete.setHandler(new DeleteEndpoint(accountService, corsHandler));
-        sighting.setHandler(new SightingEndpoint(corsHandler));
+        sighting.setHandler(new SightingEndpoint(sightingRepository, corsHandler));
 
         ContextHandlerCollection contexts = new ContextHandlerCollection(health, register, delete, sighting);
 

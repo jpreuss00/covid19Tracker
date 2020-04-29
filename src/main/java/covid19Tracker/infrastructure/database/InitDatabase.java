@@ -54,7 +54,7 @@ public class InitDatabase {
                 int resultString = result.getInt(1);
                 if(resultString == 0){
                     System.out.println("Creating Table userLocation...starting app next");
-                    statement.executeUpdate("CREATE TABLE userLocation (userID int, geolocation float)");
+                    statement.executeUpdate("CREATE TABLE userLocation (userID int, latitude double precision, longitude double precision, instant Date)");
                 } else {
                     System.out.println("Table userLocation already exists...starting app");
                 }

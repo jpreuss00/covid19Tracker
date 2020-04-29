@@ -4,6 +4,7 @@
 package covid19Tracker;
 
 import covid19Tracker.application.AccountService;
+import covid19Tracker.application.SightingRepository;
 import covid19Tracker.infrastructure.UserGenerator;
 import covid19Tracker.infrastructure.database.ConnectToDatabase;
 import covid19Tracker.infrastructure.database.DeleteInDatabase;
@@ -53,7 +54,9 @@ public class Main {
         UserGenerator userGenerator = new UserGenerator();
         AccountService accountService = new AccountService(userGenerator, insertInDatabase, deleteInDatabase);
 
+        SightingRepository sightingRepository = new SightingRepository(connection);
+
         CorsHandler corsHandler = new CorsHandler();
-        new Webserver(accountService, corsHandler).startJetty();
+        new Webserver(accountService, sightingRepository, corsHandler).startJetty();
     }
 }
