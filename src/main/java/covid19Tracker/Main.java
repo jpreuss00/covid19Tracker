@@ -56,7 +56,7 @@ public class Main {
         AccountService accountService = new AccountService(userGenerator, insertInDatabase, deleteInDatabase);
 
         SightingRepository sightingRepository = new SightingRepository(connection);
-        SightingService sightingService = new SightingService();
+        SightingService sightingService = new SightingService(sightingRepository);
 
         CorsHandler corsHandler = new CorsHandler();
         new Webserver(accountService, sightingRepository, sightingService, corsHandler).startJetty();
