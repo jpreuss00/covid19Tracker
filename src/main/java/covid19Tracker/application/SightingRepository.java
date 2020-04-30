@@ -5,6 +5,7 @@ import covid19Tracker.domain.Sighting;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,7 @@ public class SightingRepository {
             preparedStatement.setInt(1, userID);
             preparedStatement.setDouble(2, sighting.getLatitude());
             preparedStatement.setDouble(3, sighting.getLongitude());
-            preparedStatement.setDate(4, new java.sql.Date(sighting.getInstant().getTime()));
+            preparedStatement.setTimestamp(4, new Timestamp(sighting.getInstant().getTime()));
             preparedStatement.executeUpdate();
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
