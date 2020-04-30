@@ -1,7 +1,5 @@
-package covid19Tracker.infrastructure.web;
+package covid19Tracker.domain;
 
-import covid19Tracker.domain.Sighting;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;

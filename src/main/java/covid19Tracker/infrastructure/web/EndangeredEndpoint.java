@@ -35,17 +35,19 @@ public class EndangeredEndpoint extends AbstractHandler {
             latitude = Double.parseDouble(request.getParameter("latitude"));
         }
         if (request.getParameter("longitude") != null) {
-            longitude = Double.parseDouble(request.getParameter("latitude"));
+            longitude = Double.parseDouble(request.getParameter("longitude"));
         }
         Date date = new Date();
 
         if (latitude != 0 && longitude != 0) {
             Sighting sighting = new Sighting(latitude, longitude, date);
-            if(sightingService.isEndangered(sighting)){
+            if (sightingService.isEndangered(sighting)) {
                 response.setStatus(200);
             } else {
                 response.setStatus(204);
             }
+        } else {
+            response.setStatus(400);
         }
         System.out.println("Endangered Page is running...");
     }
