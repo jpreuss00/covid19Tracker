@@ -13,6 +13,8 @@ import java.io.IOException;
 
 public class RegisterEndpoint extends AbstractHandler {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private final AccountService accountService;
     private final CorsHandler corsHandler;
 
@@ -29,6 +31,7 @@ public class RegisterEndpoint extends AbstractHandler {
         User user = accountService.register();
         if (user == null) {
             response.setStatus(500);
+            logr.info("There was an error creating a new user.");
             return;
         }
 
@@ -36,7 +39,7 @@ public class RegisterEndpoint extends AbstractHandler {
         data.put("deletecode", user.deleteCode);
         response.setContentType(MimeTypes.Type.APPLICATION_JSON_UTF_8.asString());
         response.getWriter().print(data);
-
-        System.out.println("Register Page is running...");
+        logr.info("A new user has been created.");
+        logr.info("Register Page is running!");
     }
 }

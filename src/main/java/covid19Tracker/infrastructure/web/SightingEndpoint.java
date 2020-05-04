@@ -12,6 +12,8 @@ import java.util.Date;
 
 public class SightingEndpoint extends AbstractHandler {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private SightingRepository sightingRepository;
     private final CorsHandler corsHandler;
 
@@ -42,10 +44,12 @@ public class SightingEndpoint extends AbstractHandler {
             Sighting sighting = new Sighting(latitude, longitude, date);
             sightingRepository.saveNewSighting(userID, sighting);
             response.setStatus(204);
+            logr.info("New Sighting has been saved!");
         } else {
             response.setStatus(400);
+            logr.info("There was an error creating an new Sighting with given data: userID: " + userID + ", latitude: " + latitude + ", longitude: " + longitude + ", Date: " + date);
             return;
         }
-        System.out.println("Sighting Page is running...");
+        logr.info("Sighting Page is running");
     }
 }

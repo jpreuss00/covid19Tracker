@@ -13,6 +13,8 @@ import java.sql.Connection;
 
 public class Webserver {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private final AccountService accountService;
     private final CorsHandler corsHandler;
     private final SightingRepository sightingRepository;
@@ -57,6 +59,7 @@ public class Webserver {
 
         server.setHandler(contexts);
         server.start();
+        logr.info("Server has been started with Port: " + port + ".");
         server.join();
     }
 }

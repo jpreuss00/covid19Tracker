@@ -112,3 +112,12 @@
 - Mehr in die ursprüngliche Programmierung investieren, bevor später viel Geld in der Wartung ausgegeben wird.
 - klarer Code mit einer klare Architektur mit Erklärungen und umfassenden Kommentaren für alle Aufgaben.
 - Probleme: "Heute ist ein Dollar mehr Wert als morgen" und die "Unsicherheit der Zeit". Meistens wird eher auf das schnelle Geld geachtet, als auf die einfache Weiterentwicklung in der Zukunft zu setzen.
+
+# What is Observability? What is Monitoring? What is the difference?
+- Monitoring: Teilt mit, wenn ein Fehler auftritt und gibt Informationen über das System(Tracker: Teilt beim Start die Informationen zur DB mit(pw, user etc.))
+- Observability: Stellt fest, was für ein Fehler auftritt und wo er auftritt(Tracker: alamiert über falsche Passwort Eingabe)
+
+# Here is a controversial opinion: https://lemire.me/blog/2016/06/21/i-do-not-use-a-debugger/ Do you agree?
+- Da ich noch nicht an solch großen Projekten gearbeitet habe, kann ich der Aussage nur zustimmen mit den Informationen die ich bis dato gesammelt habe. Jedoch benutze ich den Debugger auch nicht wirklich und daher gebe ich ihm schon Recht.
+
+# 
