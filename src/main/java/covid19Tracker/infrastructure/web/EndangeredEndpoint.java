@@ -1,12 +1,9 @@
 package covid19Tracker.infrastructure.web;
 
-import covid19Tracker.application.AccountService;
-import covid19Tracker.application.SightingRepository;
 import covid19Tracker.application.SightingService;
 import covid19Tracker.domain.Sighting;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
-import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

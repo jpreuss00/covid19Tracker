@@ -35,12 +35,12 @@ public class SightingEndpoint extends AbstractHandler {
             latitude = Double.parseDouble(request.getParameter("latitude"));
         }
         if (request.getParameter("longitude") != null) {
-            longitude = Double.parseDouble(request.getParameter("latitude"));
+            longitude = Double.parseDouble(request.getParameter("longitude"));
         }
         Date date = new Date();
         if (userID != 0 && latitude != 0 && longitude != 0) {
             Sighting sighting = new Sighting(latitude, longitude, date);
-            sightingRepository.insertNewSightingInDB(userID, sighting);
+            sightingRepository.saveNewSighting(userID, sighting);
             response.setStatus(204);
         } else {
             response.setStatus(400);

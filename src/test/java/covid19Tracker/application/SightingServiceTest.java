@@ -27,7 +27,7 @@ public class SightingServiceTest {
         List<Sighting> sightings = new ArrayList<>();
         Sighting compareSighting = new Sighting(52.1313922, 13.216249399999999, new java.util.Date());
 
-        Mockito.doReturn(sightings).when(sightingRepository).getSightingsOutOfDBInNear(sighting);
+        Mockito.doReturn(sightings).when(sightingRepository).getSightingsCloseTo(sighting);
         Mockito.doReturn(true).when(sighting).closeTo(compareSighting);
 
         sightingService.isEndangered(sighting);

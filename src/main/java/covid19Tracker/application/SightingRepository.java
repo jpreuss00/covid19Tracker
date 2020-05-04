@@ -18,7 +18,7 @@ public class SightingRepository {
         this.connection = connection;
     }
 
-    public void insertNewSightingInDB(int userID, Sighting sighting) {
+    public void saveNewSighting(int userID, Sighting sighting) {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO userLocation(userID, latitude, longitude, instant)" + "VALUES (?, ?, ?, ?)");
             preparedStatement.setInt(1, userID);
@@ -32,7 +32,7 @@ public class SightingRepository {
         }
     }
 
-    public List<Sighting> getSightingsOutOfDBInNear(Sighting sighting) {
+    public List<Sighting> getSightingsCloseTo(Sighting sighting) {
         try {
             List<Sighting> sightings = new ArrayList<>();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT COUNT (*) FROM userLocation WHERE (latitude BETWEEN ? AND ?) AND (longitude BETWEEN ? AND ?)");

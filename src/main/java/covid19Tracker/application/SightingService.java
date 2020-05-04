@@ -14,11 +14,12 @@ public class SightingService {
     }
 
     public boolean isEndangered(Sighting sighting){
-        List<Sighting> sightings = new ArrayList<>(sightingRepository.getSightingsOutOfDBInNear(sighting));
-
-        for(Sighting compareSighting : sightings){
-            if(sighting.closeTo(compareSighting)){
-                return true;
+        if (sightingRepository.getSightingsCloseTo(sighting) != null) {
+            List<Sighting> sightings = new ArrayList<>(sightingRepository.getSightingsCloseTo(sighting));
+            for (Sighting compareSighting : sightings) {
+                if (sighting.closeTo(compareSighting)) {
+                    return true;
+                }
             }
         }
         return false;
