@@ -15,13 +15,14 @@ import covid19Tracker.infrastructure.web.CorsHandler;
 import covid19Tracker.infrastructure.web.Webserver;
 
 import java.sql.Connection;
+import java.util.logging.Logger;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Logger.setUpLogger();
-        final java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+        LoggerConfiguration.setUpLogger();
+        final Logger logr = Logger.getLogger(Main.class.getName());
 
         String database_url = System.getenv("DATABASE_URL");
         String host = "";

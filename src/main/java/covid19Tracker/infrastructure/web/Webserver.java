@@ -9,11 +9,11 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 
-import java.sql.Connection;
+import java.util.logging.Logger;
 
 public class Webserver {
 
-    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+    private final static Logger logr = Logger.getLogger(Webserver.class.getName());
 
     private final AccountService accountService;
     private final CorsHandler corsHandler;

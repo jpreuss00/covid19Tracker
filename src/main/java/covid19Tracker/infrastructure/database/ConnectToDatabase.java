@@ -2,10 +2,11 @@ package covid19Tracker.infrastructure.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.logging.Logger;
 
 public class ConnectToDatabase {
 
-    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+    private final static Logger logr = Logger.getLogger(ConnectToDatabase.class.getName());
 
     private String host;
     private String user;

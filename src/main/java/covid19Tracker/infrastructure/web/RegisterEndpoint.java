@@ -10,10 +10,11 @@ import org.json.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class RegisterEndpoint extends AbstractHandler {
 
-    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+    private final static Logger logr = Logger.getLogger(RegisterEndpoint.class.getName());
 
     private final AccountService accountService;
     private final CorsHandler corsHandler;
@@ -39,7 +40,7 @@ public class RegisterEndpoint extends AbstractHandler {
         data.put("deletecode", user.deleteCode);
         response.setContentType(MimeTypes.Type.APPLICATION_JSON_UTF_8.asString());
         response.getWriter().print(data);
-        logr.finer("A new user has been created.");
+        logr.info("A new user has been created.");
         logr.fine("Register Page is running!");
     }
 }

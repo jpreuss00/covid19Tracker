@@ -7,11 +7,11 @@ import org.json.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class HealthEndpoint extends AbstractHandler {
 
-    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
-
+    private final static Logger logr = Logger.getLogger(HealthEndpoint.class.getName());
 
     private final CorsHandler corsHandler;
 

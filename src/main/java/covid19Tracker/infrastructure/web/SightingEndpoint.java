@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
+import java.util.logging.Logger;
 
 public class SightingEndpoint extends AbstractHandler {
 
-    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+    private final static Logger logr = Logger.getLogger(SightingEndpoint.class.getName());
 
     private SightingRepository sightingRepository;
     private final CorsHandler corsHandler;
@@ -43,10 +44,10 @@ public class SightingEndpoint extends AbstractHandler {
         if (userID != 0 && latitude != 0 && longitude != 0) {
             Sighting sighting = new Sighting(latitude, longitude, date);
             sightingRepository.saveNewSighting(userID, sighting);
-            logr.finer("New Sighting has been saved!");
+            logr.info("New Sighting has been saved!");
             response.setStatus(204);
         } else {
-            logr.finer("There was an error creating an new Sighting with given data: userID: " + userID + ", latitude: " + latitude + ", longitude: " + longitude + ", Date: " + date + ".");
+            logr.info("There was an error creating an new Sighting with given data: userID: " + userID + ", latitude: " + latitude + ", longitude: " + longitude + ", Date: " + date + ".");
             response.setStatus(400);
             return;
         }
