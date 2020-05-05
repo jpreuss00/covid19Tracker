@@ -21,6 +21,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         Logger.setUpLogger();
+        final java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
 
         String database_url = System.getenv("DATABASE_URL");
         String host = "";
@@ -41,10 +42,10 @@ public class Main {
         }
 
         if (host == null || host.isEmpty() || user == null || user.isEmpty() || password == null || password.isEmpty() || database == null || database.isEmpty()) {
-            System.err.println("Missing environment variables");
+            logr.config("Missing environment variables");
             System.exit(1);
         }
-        System.out.printf("Starting app with host: %s, user: %s, database: %s, password %s\n", host, user, database, password);
+        logr.config("Starting app with host: " + host + ", user: " + user + ", database: " + database + ", password " + password + ".\n");
 
         InitDatabase initDatabase = new InitDatabase(host, user, password, database);
         initDatabase.initiateDatabase();

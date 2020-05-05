@@ -54,12 +54,11 @@ public class Webserver {
         if (port == null) {
             port = "8080";
         }
-        System.out.println("PORT: " + port);
         final Server server = new Server(Integer.parseInt(port));
 
         server.setHandler(contexts);
         server.start();
-        logr.info("Server has been started with Port: " + port + ".");
+        logr.config("Server has been started with Port: " + port + ".");
         server.join();
     }
 }

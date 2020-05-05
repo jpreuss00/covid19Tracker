@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 
 public class ConnectToDatabase {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private String host;
     private String user;
     private String password;
@@ -25,10 +27,10 @@ public class ConnectToDatabase {
             return connection;
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            logr.warning(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        System.out.println("ConnectToDatabase.connect: Connection has been build up");
+        logr.fine("Connection has been build up");
         return null;
     }
 

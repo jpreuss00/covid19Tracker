@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 
 public class DeleteInDatabase {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private final Connection connection;
 
     public DeleteInDatabase(Connection connection) {
@@ -18,7 +20,7 @@ public class DeleteInDatabase {
             preparedStatement.setString(1, deleteCode);
             preparedStatement.executeUpdate();
         } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            logr.warning(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -37,7 +39,7 @@ public class DeleteInDatabase {
                         return false;
                     }
                 } catch (Exception e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    logr.warning(e.getClass().getName() + ": " + e.getMessage());
                     System.exit(0);
                 }
             }

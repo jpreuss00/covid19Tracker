@@ -12,6 +12,8 @@ import java.util.Date;
 
 public class EndangeredEndpoint extends AbstractHandler {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private final CorsHandler corsHandler;
     private final SightingService sightingService;
 
@@ -39,14 +41,17 @@ public class EndangeredEndpoint extends AbstractHandler {
         if (latitude != 0 && longitude != 0) {
             Sighting sighting = new Sighting(latitude, longitude, date);
             if (sightingService.isEndangered(sighting)) {
+                logr.finer("An endangered Sighting has been found in the near.");
                 response.setStatus(200);
             } else {
+                logr.finer("There has been no endangenred sighting found in the near.");
                 response.setStatus(204);
             }
         } else {
+            logr.finer("There was an error with transferring the geolocation to the backend.");
             response.setStatus(400);
         }
-        System.out.println("Endangered Page is running...");
+        logr.fine("Endangered Page is running!");
     }
 
 }

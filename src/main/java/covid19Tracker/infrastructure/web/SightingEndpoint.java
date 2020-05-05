@@ -43,13 +43,13 @@ public class SightingEndpoint extends AbstractHandler {
         if (userID != 0 && latitude != 0 && longitude != 0) {
             Sighting sighting = new Sighting(latitude, longitude, date);
             sightingRepository.saveNewSighting(userID, sighting);
+            logr.finer("New Sighting has been saved!");
             response.setStatus(204);
-            logr.info("New Sighting has been saved!");
         } else {
+            logr.finer("There was an error creating an new Sighting with given data: userID: " + userID + ", latitude: " + latitude + ", longitude: " + longitude + ", Date: " + date + ".");
             response.setStatus(400);
-            logr.info("There was an error creating an new Sighting with given data: userID: " + userID + ", latitude: " + latitude + ", longitude: " + longitude + ", Date: " + date);
             return;
         }
-        logr.info("Sighting Page is running");
+        logr.fine("Sighting Page is running!");
     }
 }

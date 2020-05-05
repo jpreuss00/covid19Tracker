@@ -12,6 +12,8 @@ import java.util.List;
 
 public class SightingRepository {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private Connection connection;
 
     public SightingRepository(Connection connection) {
@@ -27,7 +29,7 @@ public class SightingRepository {
             preparedStatement.setTimestamp(4, new Timestamp(sighting.getInstant().getTime()));
             preparedStatement.executeUpdate();
         } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            logr.warning(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -85,7 +87,7 @@ public class SightingRepository {
                 return null;
             }
         } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            logr.warning(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return null;

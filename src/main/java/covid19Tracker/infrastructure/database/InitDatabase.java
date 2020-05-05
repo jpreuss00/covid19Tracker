@@ -4,6 +4,8 @@ import java.sql.*;
 
 public class InitDatabase {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private String host;
     private String user;
     private String password;
@@ -25,9 +27,9 @@ public class InitDatabase {
             while (resultDB.next()) {
                 String catalogs = resultDB.getString(1);
                 if (database.equals(catalogs)) {
-                    System.out.println("Database already exists...creating table");
+                    logr.config("Database already exists...creating table");
                 } else {
-                    System.out.println("Creating Database...creating table next");
+                    logr.config("Creating Database...creating table next");
                     Statement statement = connection.createStatement();
                     statement.executeUpdate("CREATE DATABASE " + database + "");
                 }
@@ -41,10 +43,10 @@ public class InitDatabase {
             if (result.next()) {
                 int resultString = result.getInt(1);
                 if (resultString == 0) {
-                    System.out.println("Creating Table userData...creating table userLocation next");
+                    logr.config("Creating Table userData...creating table userLocation next");
                     statement.executeUpdate("CREATE TABLE userData (userID int, deleteCode varchar)");
                 } else {
-                    System.out.println("Table userData already exists...creating table userLocation");
+                    logr.config("Table userData already exists...creating table userLocation");
                 }
             }
 
@@ -53,17 +55,17 @@ public class InitDatabase {
             if (result.next()) {
                 int resultString = result.getInt(1);
                 if (resultString == 0) {
-                    System.out.println("Creating Table userLocation...starting app next");
+                    logr.config("Creating Table userLocation...starting app next");
                     statement.executeUpdate("CREATE TABLE userLocation (userID int, latitude double precision, longitude double precision, instant Date)");
                 } else {
-                    System.out.println("Table userLocation already exists...starting app");
+                    logr.config("Table userLocation already exists...starting app");
                 }
             }
-            System.out.println("InitDatabase.initiateDatabase: Database has been initialized.");
+            logr.config("Database has been initialized.");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            logr.warning(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
             return false;
         }

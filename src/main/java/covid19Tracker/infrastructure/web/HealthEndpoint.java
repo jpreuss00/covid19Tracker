@@ -10,6 +10,9 @@ import java.io.IOException;
 
 public class HealthEndpoint extends AbstractHandler {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
+
     private final CorsHandler corsHandler;
 
     public HealthEndpoint(CorsHandler corsHandler) {
@@ -23,6 +26,6 @@ public class HealthEndpoint extends AbstractHandler {
         JSONObject json = new JSONObject().put("Status", "up");
         response.getWriter().print(json);
         baseRequest.setHandled(true);
-        System.out.println("Health Page is running...");
+        logr.fine("Health Page is running!");
     }
 }

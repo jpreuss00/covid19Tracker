@@ -11,6 +11,8 @@ import java.io.IOException;
 
 public class DeleteEndpoint extends AbstractHandler {
 
+    private final static java.util.logging.Logger logr = java.util.logging.Logger.getLogger("Logger");
+
     private final AccountService accountService;
     private final CorsHandler corsHandler;
 
@@ -27,16 +29,16 @@ public class DeleteEndpoint extends AbstractHandler {
         if (request.getParameter("deleteCode") != null && !request.getParameter("deleteCode").isEmpty()) {
             String deleteCode = request.getParameter("deleteCode");
             if (accountService.delete(deleteCode)) {
-                System.out.println("deleted user with valid deleteCode");
+                logr.finer("deleted user with valid deleteCode");
                 response.setStatus(204);
             } else {
-                System.out.println("wrong deleteCode");
+                logr.finer("wrong deleteCode");
                 response.setStatus(404);
             }
         } else {
-            System.out.println("missing deleteCode");
+            logr.finer("missing deleteCode");
             response.setStatus(400);
         }
-        System.out.println("Delete Page is running...");
+        logr.fine("Delete Page is running...");
     }
 }
