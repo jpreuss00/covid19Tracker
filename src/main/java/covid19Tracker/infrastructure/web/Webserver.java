@@ -3,8 +3,6 @@ package covid19Tracker.infrastructure.web;
 import covid19Tracker.application.AccountService;
 import covid19Tracker.application.SightingRepository;
 import covid19Tracker.application.SightingService;
-import covid19Tracker.infrastructure.database.DeleteInDatabase;
-import org.checkerframework.checker.units.qual.C;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;

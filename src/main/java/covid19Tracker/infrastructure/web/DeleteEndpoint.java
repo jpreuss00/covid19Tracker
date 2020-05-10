@@ -1,7 +1,6 @@
 package covid19Tracker.infrastructure.web;
 
 import covid19Tracker.application.AccountService;
-import covid19Tracker.infrastructure.database.DeleteInDatabase;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
